@@ -21,6 +21,9 @@ app.use("/api", indexRoutes);
 const cardRoutes = require("./routes/card.routes");
 app.use("/api", cardRoutes);
 
+const playerRoutes = require("./routes/player.routes");
+app.use("/api", playerRoutes);
+
 const authRoutes = require("./routes/auth.routes");
 app.use("/auth", authRoutes);
 
