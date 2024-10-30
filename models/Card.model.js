@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const playerCardSchema = new Schema({
+const cardSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -19,14 +19,25 @@ const playerCardSchema = new Schema({
   },
   attackAnimation: {
     type: String,
-    required: true,
   },
   specialAttack: {
     type: String,
+  },
+  category: {
+    type: String,
+    enum: ["player", "enemy"],
     required: true,
+  },
+  style: {
+    type: String,
+    enum: ["melee", "ranged", "magic"],
+  },
+  type: {
+    type: String,
+    enum: ["water", "fire", "earth", "air", "electric", "normal"],
   },
 });
 
-const PlayerCard = model("PlayerCard", playerCardSchema);
+const Card = model("Card", cardSchema);
 
-module.exports = PlayerCard;
+module.exports = Card;

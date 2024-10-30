@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 
-const PlayerCard = require("../models/PlayerCard.model");
-const EnemyCard = require("../models/EnemyCard.model");
+const Card = require("../models/Card.model");
+/* const EnemyCard = require("../models/EnemyCard.model"); */
 
-//GET player cards
-router.get("/cards/player-cards", (req, res, next) => {
-  PlayerCard.find()
+//GET cards
+router.get("/cards", (req, res, next) => {
+  Card.find()
     .then((response) => {
       res.status(200).json(response);
     })
@@ -16,52 +16,28 @@ router.get("/cards/player-cards", (req, res, next) => {
     });
 });
 
-//CREATE and POST a new player card
-router.post("/cards/player-cards", (req, res, next) => {
-  const { name, health, attack, image, attackAnimation, specialAttack } =
-    req.body;
-
-  const newPlayerCard = {
+//POST a new card
+router.post("/cards", (req, res, next) => {
+  const {
     name,
     health,
     attack,
     image,
     attackAnimation,
     specialAttack,
-  };
-  PlayerCard.create(newPlayerCard)
-    .then((newCard) => {
-      res.status(201).json(newCard);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
+    category,
+  } = req.body;
 
-//ENEMY ROUTES
-
-//GET enemy cards
-router.get("/cards/enemy-cards", (req, res, next) => {
-  EnemyCard.find()
-    .then((response) => {
-      res.status(200).json(response);
-    })
-    .catch((err) => {
-      res.json(err);
-    });
-});
-
-//CREATE and POST a new enemy
-router.post("/cards/enemy-cards", (req, res, next) => {
-  const { name, health, attack, image } = req.body;
-
-  const newEnemyCard = {
+  const newCard = {
     name,
     health,
     attack,
     image,
+    attackAnimation,
+    specialAttack,
+    category,
   };
-  EnemyCard.create(newEnemyCard)
+  Card.create(newCard)
     .then((newCard) => {
       res.status(201).json(newCard);
     })

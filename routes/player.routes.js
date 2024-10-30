@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 const User = require("../models/User.model");
-const PlayerCard = require("../models/PlayerCard.model");
+const Card = require("../models/Card.model");
 
 //get player info
 router.get("/player/:playerId", (req, res, next) => {
@@ -30,6 +30,21 @@ router.put("/player/inventory", (req, res, next) => {
 
     .then((response) => {
       res.status(200).json({ message: "Card added to inventory successfully" });
+    })
+    .catch((err) => next(err));
+});
+
+router.delete("/player/inventory", (req, res, next) => {
+  const { playerId } = req.body;
+  const { cardId } = req.body;
+
+  User.findByIdAndUpdate(playerId, {
+    $pull: { inventory: cardId },
+  })
+    .then((response) => {
+      res
+        .status(200)
+        .json({ message: "Card removed from inventory successfully" });
     })
     .catch((err) => next(err));
 });
